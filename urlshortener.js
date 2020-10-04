@@ -10,11 +10,11 @@ module.exports = (app, urlDB) => {
 		url: yup.string().trim().matches(urlRegEx, "URL is not valid.").required("URL is required.")
 	});
 	
-	const notFound = path.join(__dirname, "..", "public", "404.html");
+	const notFound = path.join(__dirname, "u", "404.html");
 	
 	urlDB.createIndex({ slug: 1 }, { unique: true });
 
-	app.get("/u/:slug", async (req, res, next) => {
+	app.get("/:slug", async (req, res, next) => {
 		let { slug } = req.params;
 		try {
 			let result = await urlDB.findOne({ slug });
@@ -33,7 +33,7 @@ module.exports = (app, urlDB) => {
 	
 	let rate = 10;
 
-	app.post("/u", rateLimit({
+	app.post("/", rateLimit({
 		windowMs: rate * 1000,
 		max: 1,
 		message: {message: `Slow down buddy, try again in ${rate} seconds.`}
@@ -62,7 +62,7 @@ module.exports = (app, urlDB) => {
 				time: Date.now()
 			});
 			res.json({
-				message: `https://berkeozgen.me/u/${slug}`
+				message: `https://bzgn.me/u/${slug}`
 			});
 		} catch (err) {
 			next(err);
