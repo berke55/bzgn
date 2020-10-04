@@ -52,7 +52,7 @@ module.exports = (app, urlDB) => {
 				if (existing) {
 					throw new Error("In use.");
 				}
-				if (url.includes(`berkeozgen.me/u/${slug}`)) {
+				if (url.includes(`bzgn.me/${slug}`)) {
 					throw new Error("Loop detected.");
 				}
 			}
@@ -62,7 +62,7 @@ module.exports = (app, urlDB) => {
 				time: Date.now()
 			});
 			res.json({
-				message: `https://bzgn.me/u/${slug}`
+				message: `bzgn.me/${slug}`
 			});
 		} catch (err) {
 			next(err);
