@@ -19,7 +19,7 @@ const server = app.listen(port, () => {
 const db = monk(process.env.MONGO);
 const urlDB = db.get("url");
 
-const urlshortener = require(path.join(__dirname, 
+const urlshortener = require(path.join(__dirname, "urlshortener.js"))(app, urlDB);
 
 app.use((err, req, res, next) => {
 	if (err.status) {
@@ -30,4 +30,4 @@ app.use((err, req, res, next) => {
 	res.json({
 		message: err.message
 	});
-});"urlshortener.js"))(app, urlDB);
+});
