@@ -31,6 +31,11 @@ app.get("/folder/:folder", (req, res) => {
 	res.redirect(`https://bzgn.azurewebsites.net/files/${req.params.folder}`);
 });
 
+const notFound = path.join(__dirname, "u", "404.html");
+app.use((req, res, next) => {
+	res.status(404).sendFile(notFound);
+});
+
 app.use((err, req, res, next) => {
 	if (err.status) {
 		res.status(err.status);
