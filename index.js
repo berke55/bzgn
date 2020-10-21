@@ -3,9 +3,11 @@ const monk = require("monk");
 const path = require("path");
 const favicon = require("serve-favicon");
 const hsts = require("hsts");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(hsts());
 app.use(express.static(path.join(__dirname, "u")));
 app.use(express.json({limit: "1kb"}));
