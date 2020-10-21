@@ -24,11 +24,11 @@ const urlDB = db.get("url");
 const urlshortener = require(path.join(__dirname, "urlshortener.js"))(app, urlDB);
 
 app.get("/file/:file", (req, res) => {
-	res.redirect(`https://bzgn.azurewebsites.net/${req.params.file}`);
+	res.redirect(`https://bzgn.azurewebsites.net/${req.params.file}/`);
 });
 
 app.get("/folder/:folder", (req, res) => {
-	res.redirect(`https://bzgn.azurewebsites.net/files/${req.params.folder}`);
+	res.redirect(`https://bzgn.azurewebsites.net/files/${req.params.folder}/`);
 });
 
 const notFound = path.join(__dirname, "u", "404.html");
