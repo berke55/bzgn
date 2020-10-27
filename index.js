@@ -24,7 +24,7 @@ const urlDB = db.get("url");
 const urlshortener = require(path.join(__dirname, "urlshortener.js"))(app, urlDB);
 
 app.get("/file/:file", (req, res) => {
-	res.redirect(`https://bzgn.azurewebsites.net/${req.params.file}/`);
+	res.redirect(`https://bzgn.azurewebsites.net/${req.params.file}`);
 });
 
 app.get("/folder/:folder", (req, res) => {
