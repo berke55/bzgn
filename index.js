@@ -23,12 +23,12 @@ const urlDB = db.get("url");
 
 const urlshortener = require(path.join(__dirname, "urlshortener.js"))(app, urlDB);
 
-app.get("/file/:file", (req, res) => {
-	res.redirect(`https://bzgn.azurewebsites.net/${req.params.file}`);
+app.get("/file/*", (req, res) => {
+	res.redirect(`https://bzgn.azurewebsites.net/${req.path.substring(6)}`);
 });
 
-app.get("/folder/:folder", (req, res) => {
-	res.redirect(`https://bzgn.azurewebsites.net/files/${req.params.folder}/`);
+app.get("/folder/*", (req, res) => {
+	res.redirect(`https://bzgn.azurewebsites.net/files/${req.path.substring(6)}/`);
 });
 
 app.get("/gh/:repo", (req, res) => {
