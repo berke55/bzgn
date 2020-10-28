@@ -28,7 +28,7 @@ app.get("/file/*", (req, res) => {
 });
 
 app.get("/folder/*", (req, res) => {
-	res.redirect(`https://bzgn.azurewebsites.net/files/${req.path.substring(6)}/`);
+	res.redirect(`https://bzgn.azurewebsites.net/files/${req.path.substring(8)}/`);
 });
 
 app.get("/gh/:repo", (req, res) => {
