@@ -37,8 +37,10 @@ app.get("/folder/*", (req, res) => {
 	let param = "/";
 	if (req.query.download != undefined) {
 		param = "?download";
+	} else if (req.path.endsWith("/")) {
+		param = "";
 	}
-	res.redirect(`https://bzgn.azurewebsites.net/files/${req.path.substring(8)}${param}`);
+	res.redirect(`https://bzgn.azurewebsites.net/folder/${req.path.substring(8)}${param}`);
 });
 
 app.get("/gh/:repo", (req, res) => {
