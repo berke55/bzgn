@@ -34,13 +34,11 @@ app.get("/file/*", (req, res) => {
 });
 
 app.get("/folder/*", (req, res) => {
-	let param = "";
+	let param = "/";
 	if (req.query.download != undefined) {
 		param = "?download";
-	} else if (req.query.edit != undefined) {
-		param = "?edit";	
 	}
-	res.redirect(`https://bzgn.azurewebsites.net/files/${req.path.substring(8)}${param}/`);
+	res.redirect(`https://bzgn.azurewebsites.net/files/${req.path.substring(8)}${param}`);
 });
 
 app.get("/gh/:repo", (req, res) => {
