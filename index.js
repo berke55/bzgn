@@ -24,11 +24,23 @@ const urlDB = db.get("url");
 const urlshortener = require(path.join(__dirname, "urlshortener.js"))(app, urlDB);
 
 app.get("/file/*", (req, res) => {
-	res.redirect(`https://bzgn.azurewebsites.net/${req.path.substring(6)}`);
+	let param = "";
+	if (req.query.download != undefined) {
+		param = "?download";
+	} else if (req.query.edit != undefined) {
+		param = "?edit";	
+	}
+	res.redirect(`https://bzgn.azurewebsites.net/${req.path.substring(6)}${param}`);
 });
 
 app.get("/folder/*", (req, res) => {
-	res.redirect(`https://bzgn.azurewebsites.net/files/${req.path.substring(8)}/`);
+	let param = "";
+	if (req.query.download != undefined) {
+		param = "?download";
+	} else if (req.query.edit != undefined) {
+		param = "?edit";	
+	}
+	res.redirect(`https://bzgn.azurewebsites.net/files/${req.path.substring(8)}${param}/`);
 });
 
 app.get("/gh/:repo", (req, res) => {
