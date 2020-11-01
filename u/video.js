@@ -48,6 +48,8 @@ function video(playbackRate = 1, skipRate = 10) {
 	popup(instructions, 8);
 	
 	document.onkeydown = e => {
+		let url = window.location.href;
+		let data = localStorage.getItem("videoLeftOffAt");
 		switch (e.keyCode) {
 			case 37:
 				e.preventDefault();
@@ -90,17 +92,40 @@ function video(playbackRate = 1, skipRate = 10) {
 				break;
 			case 83:
 				e.preventDefault();
+				try {
+					data = JSON.parse(data.toString());
+				} catch (e) {
+					data = [];
+				}
 				let time = video.currentTime;
-				localStorage.setItem("videoLeftOffAt", time);
+				let exists = false;
+				for (let i of data) {
+					if (i.url == url) {
+						i.time = time;
+						exists = true;
+						break;
+					}
+				}
+				if (!exists) {
+					let obj = { url, time };
+					data.push(obj);
+				}
+				localStorage.setItem("videoLeftOffAt", JSON.stringify(data));
 				popup(`Left off at ${msToTimeStr(time)}`);
 				break;
 			case 76:
 				e.preventDefault();
-				if (localStorage.getItem("videoLeftOffAt")) {
-					let time = localStorage.getItem("videoLeftOffAt");
+				try {
+					data = JSON.parse(data.toString());
+					let time;
+					for (let i of data) {
+						if (i.url == url) {
+							time = i.time;
+						}
+					}
 					video.currentTime = time;
 					popup(`Continuing from ${msToTimeStr(time)}`);
-				} else {
+				} catch (e) {
 					popup("No save found.");
 				}
 				break;
