@@ -93,7 +93,8 @@ function video(playbackRate = 1, skipRate = 10) {
 			case 83:
 				e.preventDefault();
 				try {
-					data = JSON.parse(data.toString());
+					data = JSON.parse(data);
+					if (!data || typeof data != "object") throw new Error();
 				} catch (e) {
 					data = [];
 				}
@@ -116,7 +117,8 @@ function video(playbackRate = 1, skipRate = 10) {
 			case 76:
 				e.preventDefault();
 				try {
-					data = JSON.parse(data.toString());
+					data = JSON.parse(data);
+					if (!data || typeof data != "object") throw new Error();
 					let time;
 					for (let i of data) {
 						if (i.url == url) {
