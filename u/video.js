@@ -41,7 +41,6 @@ function video(playbackRate = 1, skipRate = 10) {
 						Up arrow -> Speed up
 						Down arrow -> Slow down
 						Space -> Play/Pause
-						F -> Fullscreen on/off
 						S -> Save timestamp
 						L -> Load timestamp`;
 	
@@ -70,15 +69,6 @@ function video(playbackRate = 1, skipRate = 10) {
 					video.pause();
 					popup("II");
 				}
-				break;
-			case 70:
-				e.preventDefault();
-				if (document.fullscreen) {
-					document.exitFullscreen();
-				} else {
-					video.requestFullscreen();
-				}
-				popup("F");
 				break;
 			case 38:
 				e.preventDefault();
