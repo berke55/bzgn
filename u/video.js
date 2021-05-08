@@ -42,7 +42,8 @@ function video(playbackRate = 1, skipRate = 10) {
 						Down arrow -> Slow down
 						Space -> Play/Pause
 						S -> Save timestamp
-						L -> Load timestamp`;
+						L -> Load timestamp
+						I -> Show time left`;
 	
 	popup(instructions, 8);
 	
@@ -124,6 +125,9 @@ function video(playbackRate = 1, skipRate = 10) {
 			case 84:
 				popup(instructions, 8);
 				break;
+			case 80:
+				e.preventDefault();
+				popup(new Date(video.duration - video.currentTime * 1000).toTimeString().match(/[0-9:]*/));
 		}
 	};
 }
