@@ -43,7 +43,7 @@ function video(playbackRate = 1, skipRate = 10) {
 						Space -> Play/Pause
 						S -> Save timestamp
 						L -> Load timestamp
-						I -> Show time left`;
+						P -> Show time left`;
 	
 	popup(instructions, 8);
 	
@@ -127,7 +127,7 @@ function video(playbackRate = 1, skipRate = 10) {
 				break;
 			case 80:
 				e.preventDefault();
-				popup(new Date(video.duration - video.currentTime * 1000).toTimeString().match(/[0-9:]*/));
+				popup(new Date((video.duration - video.currentTime) * 1000 / video.playbackRate).toUTCString().match(/\d\d:\d\d:\d\d/));
 		}
 	};
 }
