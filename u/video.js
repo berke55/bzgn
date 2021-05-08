@@ -1,4 +1,4 @@
-function video(playbackRate = 1, skipRate = 10) {
+(function (playbackRate = 1, skipRate = 10) {
 	function popup(msg, sec = 2, el = document.querySelector("video").parentElement) {
 		if (document.getElementById("_popup_")) {
 			document.getElementById("_popup_").remove();	
@@ -22,7 +22,7 @@ function video(playbackRate = 1, skipRate = 10) {
 		popup("No video found.", 3, document.body);
 		return;
 	}
-	function msToTimeStr(time) {
+	function sToTimeStr(time) {
 		let hour = parseInt(time / 3600);
 		if (hour < 10) hour = "0" + hour;
 		let minute = parseInt((time % 3600) / 60);
@@ -48,7 +48,7 @@ function video(playbackRate = 1, skipRate = 10) {
 	popup(instructions, 8);
 	
 	document.onkeydown = e => {
-		let url = window.location.href;
+		let url = video.src.match(/.*(?=\?)/)[0];
 		let data = localStorage.getItem("videoLeftOffAt");
 		switch (e.keyCode) {
 			case 37:
@@ -99,11 +99,10 @@ function video(playbackRate = 1, skipRate = 10) {
 					}
 				}
 				if (!exists) {
-					let obj = { url, time };
-					data.push(obj);
+					data.push({ url, time });
 				}
 				localStorage.setItem("videoLeftOffAt", JSON.stringify(data));
-				popup(`Left off at ${msToTimeStr(time)}`);
+				popup(`Left off at ${sToTimeStr(time)}`);
 				break;
 			case 76:
 				e.preventDefault();
@@ -117,20 +116,19 @@ function video(playbackRate = 1, skipRate = 10) {
 						}
 					}
 					video.currentTime = time;
-					popup(`Continuing from ${msToTimeStr(time)}`);
+					popup(`Continuing from ${sToTimeStr(time)}`);
 				} catch (e) {
 					popup("No save found.");
 				}
 				break;
 			case 84:
+				e.preventDefault();
 				popup(instructions, 8);
 				break;
 			case 80:
 				e.preventDefault();
-				popup(new Date((video.duration - video.currentTime) * 1000 / video.playbackRate).toUTCString().match(/\d\d:\d\d:\d\d/));
+				popup(sToTimeStr((video.duration - video.currentTime) / video.playbackRate));
+				break;
 		}
 	};
-}
-video();
-
-// fetch("https://bzgn.me/video").then(r => r.text()).then(t => eval(t));
+})();
