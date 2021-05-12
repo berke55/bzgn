@@ -43,13 +43,15 @@
 						Space -> Play/Pause
 						S -> Save timestamp
 						L -> Load timestamp
-						P -> Show time left`;
+						P -> Show time left
+						F -> Fullscreen`;
 	
 	popup(instructions, 8);
 	
 	document.onkeydown = e => {
 		let url = video.src.match(/.*(?=\?)/)[0];
 		let data = localStorage.getItem("videoLeftOffAt");
+		if (!e.altKey && !e.ctrlKey && !e.shiftKey)
 		switch (e.keyCode) {
 			case 37:
 				e.preventDefault();
@@ -128,6 +130,11 @@
 			case 80:
 				e.preventDefault();
 				popup(sToTimeStr((video.duration - video.currentTime) / video.playbackRate));
+				break;
+			case 70:
+				e.preventDefault();
+				popup("F");
+				document.fullscreen ? document.exitFullscreen() : video.parentElement.requestFullscreen();
 				break;
 		}
 	};
