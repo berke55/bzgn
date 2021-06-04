@@ -44,7 +44,10 @@
 						S -> Save timestamp
 						L -> Load timestamp
 						P -> Show time left
-						F -> Fullscreen`;
+						F -> Fullscreen
+						M -> Mute/Unmute
+						J -> Increase skip rate
+						K -> Decrease skip rate`;
 	
 	popup(instructions, 8);
 	
@@ -76,12 +79,12 @@
 			case 38:
 				e.preventDefault();
 				if (video.playbackRate < 16) video.playbackRate += 0.5;
-				popup(video.playbackRate);
+				popup(`${video.playbackRate}x`);
 				break;
 			case 40:
 				e.preventDefault();
 				if (video.playbackRate > 0) video.playbackRate -= 0.5;
-				popup(video.playbackRate);
+				popup(`${video.playbackRate}x`);
 				break;
 			case 83:
 				e.preventDefault();
@@ -135,6 +138,21 @@
 				e.preventDefault();
 				popup("F");
 				document.fullscreen ? document.exitFullscreen() : video.parentElement.requestFullscreen();
+				break;
+			case 77:
+				e.preventDefault();
+				video.muted = !video.muted;
+				popup(video.muted ? "Muted" : "Unmuted");
+				break;
+			case 74:
+				e.preventDefault();
+				if (skipRate > 5) skipRate -= 5;
+				popup(`${skipRate}s`);
+				break;
+			case 75:
+				e.preventDefault();
+				skipRate += 5;
+				popup(`${skipRate}s`);
 				break;
 		}
 	};
