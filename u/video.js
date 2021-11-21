@@ -1,4 +1,4 @@
-(function (playbackRate = 1, skipRate = 10) {
+(function (playbackRate = 1) {
 	function popup(msg, sec = 2, el = document.querySelector("video").parentElement) {
 		if (document.getElementById("_popup_")) {
 			document.getElementById("_popup_").remove();	
@@ -36,18 +36,13 @@
 	video.playbackRate = playbackRate;
 
 	let instructions = `T -> Instructions
-						Right arrow -> Fast forward
-						Left arrow -> Rewind
 						Up arrow -> Speed up
 						Down arrow -> Slow down
-						Space -> Play/Pause
 						S -> Save timestamp
 						L -> Load timestamp
 						P -> Show time left
 						F -> Fullscreen
-						M -> Mute/Unmute
-						J -> Increase skip rate
-						K -> Decrease skip rate`;
+						M -> Mute/Unmute`;
 	
 	popup(instructions, 8);
 	
@@ -56,26 +51,6 @@
 		let data = localStorage.getItem("videoLeftOffAt");
 		if (!e.altKey && !e.ctrlKey && !e.shiftKey)
 		switch (e.keyCode) {
-			case 37:
-				e.preventDefault();
-				video.currentTime = video.currentTime - skipRate;
-				popup("<<");
-				break;
-			case 39:
-				e.preventDefault();
-				video.currentTime = video.currentTime + skipRate;
-				popup(">>");
-				break;
-			case 32:
-				e.preventDefault();
-				if (video.paused) {
-					video.play();
-					popup(">");
-				} else {
-					video.pause();
-					popup("II");
-				}
-				break;
 			case 38:
 				e.preventDefault();
 				if (video.playbackRate < 16) video.playbackRate += 0.5;
@@ -143,16 +118,6 @@
 				e.preventDefault();
 				video.muted = !video.muted;
 				popup(video.muted ? "Muted" : "Unmuted");
-				break;
-			case 74:
-				e.preventDefault();
-				if (skipRate > 5) skipRate -= 5;
-				popup(`${skipRate}s`);
-				break;
-			case 75:
-				e.preventDefault();
-				skipRate += 5;
-				popup(`${skipRate}s`);
 				break;
 		}
 	};
